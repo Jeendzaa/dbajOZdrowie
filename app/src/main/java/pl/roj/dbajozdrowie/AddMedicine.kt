@@ -35,16 +35,17 @@ class AddMedicine : AppCompatActivity()
     }
 
     // Checking is typed data is good
-    //TODO: Make date checking
     fun checkIfData(): Boolean
     {
         val name: EditText = findViewById(R.id.med_name_edit)
         val count: EditText = findViewById(R.id.count_edit)
+        val nameBool = name.text.toString() != ""
+        val countBool = count.text.toString() != ""
 
-        if (name.text.toString() == "") Toast.makeText(this, "Brak nazwy leku", Toast.LENGTH_LONG).show()
-        else if (count.text.toString() == "") Toast.makeText(this, "Brak ilośći tabletek", Toast.LENGTH_LONG).show()
+        if (!nameBool) Toast.makeText(this, "Brak nazwy leku", Toast.LENGTH_SHORT).show()
+        else if (!countBool) Toast.makeText(this, "Brak ilośći tabletek", Toast.LENGTH_SHORT).show()
 
-        return true
+        return nameBool && countBool
     }
 
     // Showing calendar
