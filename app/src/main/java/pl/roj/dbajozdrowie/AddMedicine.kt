@@ -1,12 +1,17 @@
 package pl.roj.dbajozdrowie
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.provider.ContactsContract.CommonDataKinds.Im
 import android.provider.MediaStore
 import android.view.View
 import android.widget.Button
+import android.widget.CalendarView
+import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -23,16 +28,35 @@ class AddMedicine : AppCompatActivity()
     }
 
     // Adding medicine
+    //TODO: Make adding med
+    fun addMed(view: View)
+    {
+        if (checkIfData()) Toast.makeText(this, "Lek dodany", Toast.LENGTH_LONG).show()
+    }
 
+    // Checking is typed data is good
+    //TODO: Make date checking
+    fun checkIfData(): Boolean
+    {
+        val name: EditText = findViewById(R.id.med_name_edit)
+        val count: EditText = findViewById(R.id.count_edit)
+
+        if (name.text.toString() == "") Toast.makeText(this, "Brak nazwy leku", Toast.LENGTH_LONG).show()
+        else if (count.text.toString() == "") Toast.makeText(this, "Brak ilośći tabletek", Toast.LENGTH_LONG).show()
+
+        return true
+    }
+
+    // Showing calendar
+    fun showCalendar(view: View)
+    {
+    }
 
     // Camera usage
     fun takePhoto(view: View)
     {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        if (intent.resolveActivity(packageManager) != null)
-        {
-            startActivityForResult(intent, our_request_code)
-        }
+        startActivityForResult(intent, our_request_code)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)

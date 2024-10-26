@@ -6,7 +6,7 @@
     <string name="count_text">Rozmiar opakowania</string>
     <string name="count_edit_hint">Ilość leku w opakowaniu</string>
     <string name="exp_date">Data ważnośći</string>
-    <string name="exp_edit_hint">Data ważnośći na opakowaniu</string>
+    <string name="exp_edit_hint">Wybierz datę</string>
     <string name="med_img">Zdjęcie</string>
     <string name="add_image_button">Dodaj zdjęcie</string>
     <string name="add_med_button">Dodaj lek</string>
