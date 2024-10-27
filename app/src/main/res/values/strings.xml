@@ -10,4 +10,5 @@
     <string name="med_img">Zdjęcie</string>
     <string name="add_image_button">Dodaj zdjęcie</string>
     <string name="add_med_button">Dodaj lek</string>
+    <string name="calendar_button">Dodaj datę</string>
 </resources>

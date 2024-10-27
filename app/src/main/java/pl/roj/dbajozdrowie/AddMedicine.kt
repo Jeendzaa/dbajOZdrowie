@@ -1,25 +1,22 @@
 package pl.roj.dbajozdrowie
 
-import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
-import android.provider.ContactsContract.CommonDataKinds.Im
 import android.provider.MediaStore
 import android.view.View
 import android.widget.Button
-import android.widget.CalendarView
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import kotlin.math.exp
 
 class AddMedicine : AppCompatActivity()
 {
-    private var our_request_code: Int = 123
+    private var CAMERA_REQUEST_KEY: Int = 1
+    private var CALENDAR_REQUEST_KEY: Int = 2
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
@@ -29,13 +26,13 @@ class AddMedicine : AppCompatActivity()
 
     // Adding medicine
     //TODO: Make adding med
-    fun addMed(view: View)
+    fun addMed()
     {
-        if (checkIfData()) Toast.makeText(this, "Lek dodany", Toast.LENGTH_LONG).show()
+        if (dataAccuracy()) Toast.makeText(this, "Lek dodany", Toast.LENGTH_LONG).show()
     }
 
     // Checking is typed data is good
-    fun checkIfData(): Boolean
+    fun dataAccuracy(): Boolean
     {
         val name: EditText = findViewById(R.id.med_name_edit)
         val count: EditText = findViewById(R.id.count_edit)
@@ -51,23 +48,42 @@ class AddMedicine : AppCompatActivity()
     // Showing calendar
     fun showCalendar(view: View)
     {
+        val intent = Intent(this, CalendarActivity::class.java)
+        startActivity(intent)
     }
 
-    // Camera usage
+    // Camera activity
     fun takePhoto(view: View)
     {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        startActivityForResult(intent, our_request_code)
+        startActivityForResult(intent, CAMERA_REQUEST_KEY)
     }
 
+    // onActivityResult handling camera and calendar usage
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
     {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == our_request_code && resultCode == RESULT_OK)
+
+        when(requestCode)
         {
-            val imageView: ImageView = findViewById(R.id.med_img)
-            val bitmap = data?.extras?.get("data") as Bitmap
-            imageView.setImageBitmap(bitmap)
+            CAMERA_REQUEST_KEY ->
+            {
+                if (resultCode == Activity.RESULT_OK) {
+                    val imageView: ImageView = findViewById(R.id.med_img)
+                    val bitmap = data?.extras?.get("data") as Bitmap
+                    imageView.setImageBitmap(bitmap)
+                }
+            }
+            CALENDAR_REQUEST_KEY ->
+            {
+                if(resultCode == Activity.RESULT_OK)
+                {
+                    val expButton: Button = findViewById(R.id.exp_button)
+                    val date = data?.extras?.get("data") as String
+                    expButton.text = date
+                }
+            }
         }
     }
 }
