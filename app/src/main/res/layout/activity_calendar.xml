@@ -30,6 +30,6 @@
         android:text="@string/calendar_button"
         android:textSize="25sp"
         android:backgroundTint="@color/light_blue"
-        android:onClick="setDate"
+        android:onClick="resultDate"
     />
 </androidx.constraintlayout.widget.ConstraintLayout>

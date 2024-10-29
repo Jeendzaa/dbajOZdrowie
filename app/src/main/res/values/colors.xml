@@ -4,4 +4,9 @@
     <color name="white">#FFFFFFFF</color>
     <color name="gray">#787878</color>
     <color name="light_blue">#5086de</color>
+    <color name="header">#3D434D</color>
+    <color name="header_text">#CFCFCF</color>
+    <color name="light_gray">#CFCFCF</color>
+    <color name="blue_gary">#3E4A5C</color>
+    <color name="button_text">#DEDEDE</color>
 </resources>

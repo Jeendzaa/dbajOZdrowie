@@ -9,32 +9,83 @@
     android:background="@drawable/main_background"
     >
 
-    <TextView
-        android:id="@+id/add_med_title"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/add_med_title"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="40sp"
-        app:layout_constraintBottom_toTopOf="@id/med_name_text"
+        android:layout_height="75dp"
+        app:cardBackgroundColor="@color/header"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0"
+        app:cardCornerRadius="0dp"
+        android:elevation="5dp"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/back_button"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/back_button"
+                android:layout_gravity="center_vertical"
+                android:onClick="getBack"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/add_med_title"
+            />
+
+            <TextView
+                android:id="@+id/add_med_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/jost"
+                android:text="@string/add_med_title"
+                android:textAlignment="center"
+                android:textColor="@color/header_text"
+                android:textSize="40sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/back_button"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:id="@+id/med_img"
+        android:layout_width="200dp"
+        android:layout_height="250dp"
+        android:background="@color/light_gray"
+        android:onClick="takePhoto"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintBottom_toTopOf="@id/med_img_text"
+        android:elevation="5dp"
+        android:layout_marginTop="30dp"
+    />
 
     <TextView
-        android:id="@+id/med_name_text"
+        android:id="@+id/med_img_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/add_med_title"
+        android:text="@string/med_img"
         android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="25sp"
+        android:textColor="@color/gray"
+        android:textSize="18sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/add_med_title"
-        app:layout_constraintBottom_toTopOf="@id/med_name_edit"
-    />
+        app:layout_constraintTop_toBottomOf="@id/med_img"
+        android:fontFamily="@font/jost"
+     />
 
     <EditText
         android:id="@+id/med_name_edit"
@@ -44,119 +95,131 @@
         android:textAlignment="center"
         android:textColorHint="@color/gray"
         android:textColor="@color/white"
-        android:textSize="20sp"
+        android:textSize="22sp"
         android:layout_marginHorizontal="50dp"
         android:inputType="text"
+        android:elevation="5dp"
+        android:background="@drawable/edit_background"
+        android:fontFamily="@font/jost"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/med_name_text"
-        app:layout_constraintBottom_toTopOf="@id/count_text"
+        app:layout_constraintTop_toBottomOf="@id/med_img_text"
+        app:layout_constraintBottom_toTopOf="@id/med_quantity"
     />
 
-    <TextView
-        android:id="@+id/count_text"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/med_quantity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/count_text"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="25sp"
+        android:layout_marginHorizontal="50dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/med_name_edit"
-        app:layout_constraintBottom_toTopOf="@id/count_edit"
-    />
-
-    <EditText
-        android:id="@+id/count_edit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/count_edit_hint"
-        android:textAlignment="center"
-        android:textColorHint="@color/gray"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:layout_marginHorizontal="50dp"
-        android:inputType="number"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/count_text"
-        app:layout_constraintBottom_toTopOf="@id/exp_date"
-    />
-
-    <TextView
-        android:id="@+id/exp_date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/exp_date"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="25sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/count_edit"
         app:layout_constraintBottom_toTopOf="@id/exp_button"
-    />
+    >
+
+        <EditText
+            android:id="@+id/count_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:hint="@string/count_edit_hint"
+            android:textColorHint="@color/gray"
+            android:textColor="@color/white"
+            android:inputType="number"
+            android:background="@drawable/edit_background"
+            android:elevation="5dp"
+            android:fontFamily="@font/jost"
+            android:textSize="22sp"
+            android:paddingHorizontal="25dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/unit_button"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+        <Button
+            android:id="@+id/unit_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/unit_button"
+            android:textSize="22sp"
+            android:fontFamily="@font/jost"
+            android:onClick="unitDialog"
+            android:textColor="@color/header_text"
+            android:backgroundTint="@color/blue_gary"
+            android:stateListAnimator="@null"
+            android:elevation="5dp"
+            app:layout_constraintLeft_toRightOf="@id/count_edit"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:text="@string/unit_button_hint"
+            android:textColor="@color/gray"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/unit_button"
+        />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
         android:id="@+id/exp_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/exp_edit_hint"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/exp_date"
-        app:layout_constraintBottom_toTopOf="@id/med_img_text"
-        android:onClick="showCalendar"
-    />
-
-    <TextView
-        android:id="@+id/med_img_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/med_img"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="25sp"
+        android:layout_marginHorizontal="50dp"
+        android:text="@string/exp_edit_hint"
+        android:stateListAnimator="@null"
+        android:backgroundTint="@color/blue_gary"
+        android:textColor="@color/header_text"
+        android:textSize="22sp"
+        android:fontFamily="@font/jost"
+        android:onClick="calendarDialog"
+        android:elevation="5dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/med_quantity"
+        app:layout_constraintBottom_toTopOf="@id/add_med"
+    />
+
+    <ImageButton
+        android:id="@+id/add_med"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:text="@string/add_med_button"
+        android:onClick="addMed"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/exp_button"
-        app:layout_constraintBottom_toTopOf="@id/med_img"
-    />
-
-    <ImageView
-        android:id="@+id/med_img"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:background="@color/black"
-        app:layout_constraintBottom_toTopOf="@id/add_image_button"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/med_img_text"/>
-
-    <Button
-        android:id="@+id/add_image_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/add_image_button"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/med_img"
-        app:layout_constraintBottom_toTopOf="@id/add_med"
-        android:onClick="takePhoto"
-    />
-
-    <Button
-        android:id="@+id/add_med"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/add_med_button"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/add_image_button"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:onClick="addMed"
+        android:background="@drawable/add_button"
     />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

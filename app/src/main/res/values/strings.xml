@@ -4,11 +4,18 @@
     <string name="med_name_text">Nazwa leku</string>
     <string name="med_name_edit_hint">Nazwa leku na opakowaniu</string>
     <string name="count_text">Rozmiar opakowania</string>
-    <string name="count_edit_hint">Ilość leku w opakowaniu</string>
+    <string name="count_edit_hint">Ilość leku</string>
     <string name="exp_date">Data ważnośći</string>
     <string name="exp_edit_hint">Wybierz datę</string>
-    <string name="med_img">Zdjęcie</string>
+    <string name="med_img">Kliknij aby dodać zdjęcie</string>
     <string name="add_image_button">Dodaj zdjęcie</string>
     <string name="add_med_button">Dodaj lek</string>
     <string name="calendar_button">Dodaj datę</string>
+    <string-array name="units">
+        <item>szt.</item>
+        <item>ml</item>
+    </string-array>
+    <string name="unit_button">Jednostka</string>
+    <string name="unit_button_hint">Kliknij aby wybrać</string>
+    <string name="schedule_button">Harmonogram</string>
 </resources>
