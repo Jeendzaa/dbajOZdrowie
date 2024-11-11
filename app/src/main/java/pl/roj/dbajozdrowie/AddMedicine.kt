@@ -115,7 +115,7 @@ class AddMedicine : AppCompatActivity()
 
             Toast.makeText(this, "Lek dodany" , Toast.LENGTH_SHORT).show()
 
-            startActivity(Intent(this, AddMedicine::class.java))
+            startActivity(Intent(this, MainActivity::class.java))
             overridePendingTransition(R.anim.from_left, R.anim.to_right)
         }
     }
