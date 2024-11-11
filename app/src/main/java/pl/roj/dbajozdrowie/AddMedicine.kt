@@ -2,28 +2,21 @@ package pl.roj.dbajozdrowie
 
 import android.app.Activity
 import android.app.DatePickerDialog
-import android.app.Dialog
 import android.content.Intent
 import android.graphics.Bitmap
-import android.icu.number.Scale
 import android.icu.util.Calendar
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.Button
-import android.widget.CalendarView
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.Spinner
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import java.time.Year
-import kotlin.math.exp
+import androidx.core.graphics.drawable.toBitmap
+import java.io.File
+import java.io.FileOutputStream
 
 class AddMedicine : AppCompatActivity()
 {
@@ -94,7 +87,7 @@ class AddMedicine : AppCompatActivity()
         val datePicker = DatePickerDialog(
             this, { _, selectedYear, selectedMonth, selectedDay ->
                 val date = "$selectedDay/${selectedMonth + 1}/$selectedYear"
-                findViewById<Button>(R.id.exp_button). text = date
+                findViewById<Button>(R.id.exp_button).text = date
             },
             year,
             month,
@@ -105,7 +98,6 @@ class AddMedicine : AppCompatActivity()
 
     // Adding medicine functions
     // Adding medicine
-    //TODO: Add a script for adding the medicine to the database
     fun addMed(view: View)
     {
         if (dataAccuracy())
@@ -114,9 +106,30 @@ class AddMedicine : AppCompatActivity()
             val count: EditText = findViewById(R.id.count_edit)
             val exp: Button = findViewById(R.id.exp_button)
             val unit: Button = findViewById(R.id.unit_button)
+            val medimg: ImageView = findViewById(R.id.med_img)
+            val medphotoname = PhotoNameCreator().createName(name.text.toString())
+            val medphotopath = saveToInternalStorage(medimg.drawable.toBitmap(), medphotoname)
 
-            Toast.makeText(this, "Lek ${name.text.toString()} dodany. Ilość: ${count.text.toString()} ${unit.text.toString()}. Data: ${exp.text.toString()}", Toast.LENGTH_LONG).show()
+            val db = DatabaseHelper.getInstance(this)
+            db.addMedicine(name.text.toString(), count.text.toString().toIntOrNull()?:0, exp.text.toString(), unit.text.toString(), medphotopath);
+
+            Toast.makeText(this, "Lek dodany" , Toast.LENGTH_SHORT).show()
+
+            startActivity(Intent(this, AddMedicine::class.java))
+            overridePendingTransition(R.anim.from_left, R.anim.to_right)
         }
+    }
+
+    private fun saveToInternalStorage(img: Bitmap, name: String): String
+    {
+        val file = File(filesDir, name)
+        val outputStream = FileOutputStream(file)
+
+        img.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+        outputStream.flush()
+        outputStream.close()
+
+        return file.absoluteFile.toString()
     }
 
     // Checking is typed data is good

@@ -14,6 +14,7 @@
     <string-array name="units">
         <item>szt.</item>
         <item>ml</item>
+        <item>l</item>
     </string-array>
     <string name="unit_button">Jednostka</string>
     <string name="unit_button_hint">Kliknij aby wybrać</string>
