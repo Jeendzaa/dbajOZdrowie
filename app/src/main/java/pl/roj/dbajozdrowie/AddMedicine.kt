@@ -14,18 +14,24 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.graphics.drawable.toBitmap
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import pl.roj.dbajozdrowie.db.AppDatabase
+import pl.roj.dbajozdrowie.db.Med
 import java.io.File
 import java.io.FileOutputStream
 
 class AddMedicine : AppCompatActivity()
 {
     private var CAMERA_REQUEST_KEY: Int = 1
+    private lateinit var db: AppDatabase
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_medicine)
+        db = AppDatabase.getInstance(this)
     }
 
     // Getting back to main activity (main page)
@@ -100,20 +106,24 @@ class AddMedicine : AppCompatActivity()
     // Adding medicine
     fun addMed(view: View)
     {
+        val medDao = db.medDao()
         if (dataAccuracy())
         {
-            val name: EditText = findViewById(R.id.med_name_edit)
-            val count: EditText = findViewById(R.id.count_edit)
-            val exp: Button = findViewById(R.id.exp_button)
-            val unit: Button = findViewById(R.id.unit_button)
-            val medimg: ImageView = findViewById(R.id.med_img)
-            val medphotoname = PhotoNameCreator().createName(name.text.toString())
-            val medphotopath = saveToInternalStorage(medimg.drawable.toBitmap(), medphotoname)
+            val medName: String = findViewById<EditText>(R.id.med_name_edit).toString()
+            var medCount: Int? = findViewById<EditText>(R.id.count_edit).toString().toIntOrNull()
+            val medUnit: String = findViewById<Button>(R.id.unit_button).text.toString()
+            val medExpDate: String = findViewById<Button>(R.id.exp_button).text.toString()
 
-            val db = DatabaseHelper.getInstance(this)
-            db.addMedicine(name.text.toString(), count.text.toString().toIntOrNull()?:0, exp.text.toString(), unit.text.toString(), medphotopath);
+            if (medCount == null) medCount = 0
+
+            GlobalScope.launch(Dispatchers.IO)
+            {
+                val med = Med(medName = medName, medCount = medCount, medUnit = medUnit, medExpDate = medExpDate)
+                medDao.insertAll(med)
+            }
 
             Toast.makeText(this, "Lek dodany" , Toast.LENGTH_SHORT).show()
+            //saveToInternalStorage(medimg.drawable.toBitmap(), medphotoname)
 
             startActivity(Intent(this, MainActivity::class.java))
             overridePendingTransition(R.anim.from_left, R.anim.to_right)
