@@ -12,6 +12,6 @@ interface MedDao {
     @Delete
     suspend fun delete(med: List<Med>)
 
-    @Query("SELECT * FROM MEDS")
-    fun getAll(): List<Med>
+    @Query("SELECT * FROM meds")
+    fun getAll(): Flow<List<Med>>
 }

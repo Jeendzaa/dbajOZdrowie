@@ -19,4 +19,13 @@
     <string name="unit_button">Jednostka</string>
     <string name="unit_button_hint">Kliknij aby wybrać</string>
     <string name="schedule_button">Harmonogram</string>
+    <string-array name="schedule_options">
+        <item>Codziennie</item>
+        <item>Co dwa dni</item>
+        <item>Co tydzień</item>
+    </string-array>
+    <string name="sch_name_hint">Nazwa przypomnienia</string>
+    <string name="iteration_button_hint">Powtórzenia powiadomienia</string>
+    <string name="set_reminder_button">Ustaw powiadomienie</string>
+    <string name="list_button">Lista leków</string>
 </resources>

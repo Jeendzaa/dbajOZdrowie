@@ -73,7 +73,7 @@ class AddMedicine : AppCompatActivity()
 
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Wybierz jednostkę")
-        builder.setItems(items) {dialog, witch ->
+        builder.setItems(items) { _, witch ->
             val selectetOption = items[witch]
             findViewById<Button>(R.id.unit_button).text = selectetOption.toString()
         }
@@ -104,31 +104,43 @@ class AddMedicine : AppCompatActivity()
 
     // Adding medicine functions
     // Adding medicine
-    fun addMed(view: View)
-    {
+    fun addMed(view: View) {
         val medDao = db.medDao()
-        if (dataAccuracy())
-        {
-            val medName: String = findViewById<EditText>(R.id.med_name_edit).toString()
-            var medCount: Int? = findViewById<EditText>(R.id.count_edit).toString().toIntOrNull()
+
+        if (dataAccuracy()) {
+            val medName: String = findViewById<EditText>(R.id.med_name_edit).text.toString()
+            val medCount: Int? = findViewById<EditText>(R.id.count_edit).text.toString().toIntOrNull()
             val medUnit: String = findViewById<Button>(R.id.unit_button).text.toString()
             val medExpDate: String = findViewById<Button>(R.id.exp_button).text.toString()
 
-            if (medCount == null) medCount = 0
+            val finalMedCount = medCount ?: 0 // Domyślna wartość to 0
 
-            GlobalScope.launch(Dispatchers.IO)
-            {
-                val med = Med(medName = medName, medCount = medCount, medUnit = medUnit, medExpDate = medExpDate)
-                medDao.insertAll(med)
+            GlobalScope.launch(Dispatchers.IO) {
+                try {
+                    val med = Med(
+                        medName = medName,
+                        medCount = finalMedCount,
+                        medUnit = medUnit,
+                        medExpDate = medExpDate
+                    )
+                    medDao.insertAll(med)
+                    // Przekazanie komunikatu do UI
+                    runOnUiThread {
+                        Toast.makeText(this@AddMedicine, "Lek dodany", Toast.LENGTH_SHORT).show()
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    runOnUiThread {
+                        Toast.makeText(this@AddMedicine, "Błąd podczas dodawania leku", Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
-
-            Toast.makeText(this, "Lek dodany" , Toast.LENGTH_SHORT).show()
-            //saveToInternalStorage(medimg.drawable.toBitmap(), medphotoname)
 
             startActivity(Intent(this, MainActivity::class.java))
             overridePendingTransition(R.anim.from_left, R.anim.to_right)
         }
     }
+
 
     private fun saveToInternalStorage(img: Bitmap, name: String): String
     {

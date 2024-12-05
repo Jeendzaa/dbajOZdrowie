@@ -20,10 +20,16 @@ class MainActivity : AppCompatActivity()
             overridePendingTransition(R.anim.from_right, R.anim.to_left)
         }
 
-        //TODO: Create activity for schedule and make intend
         val scheduleButton: Button = findViewById(R.id.schedule_button)
         scheduleButton.setOnClickListener {
-            Toast.makeText(this, "Harmonogram", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, ScheduleActivity::class.java))
+            overridePendingTransition(R.anim.from_right, R.anim.to_left)
+        }
+
+        val listButton: Button = findViewById(R.id.list_button)
+        listButton.setOnClickListener {
+            startActivity(Intent(this, MedList::class.java))
+            overridePendingTransition(R.anim.from_right, R.anim.to_left)
         }
     }
 }
